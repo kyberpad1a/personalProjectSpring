@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${warehouse}">
+    <h3>Подробнее про склад: </h3> <h3 th:text="${el.warehouseAddress}"></h3>
+    <table>
+        <tr>
+            <td>><a>Адрес склада:</a>
+                <a th:text="${el.warehouseAddress}"></a>
+            </td>
+        </tr>
+    </table>
+    <form th:action="'/warehouse/' + ${el.ID_Warehouse} + '/remove'" method="post">
+        <button type="submit" class="btn btn-del">Удалить</button>
+    </form>
+</div>
+</body>

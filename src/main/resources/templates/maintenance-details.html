@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${maintenance}">
+  <h3>Подробнее про обслуживание: </h3> <h3 th:text="${el.maintenanceDate}"></h3>
+  <table>
+    <tr>
+      <td>><a>Дата обслуживания:</a>
+        <a th:text="${el.maintenanceDate}"></a>
+      </td>
+    </tr>
+    <tr>
+      <td>><a>Текст заявки:</a>
+        <a th:text="${el.maintenanceText}"></a>
+      </td>
+    </tr>
+    <tr>
+      <td>><a>Статус заявки:</a>
+        <a th:text="${el.maintenanceStatus}"></a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <form th:each="mat : ${el.getUser()}">
+          <a>>Проверил: </a> <a th:text="${mat.getUsername()}"></a>
+        </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <form th:each="cer : ${el.getWarehouse()}">
+          <a>>Товар: </a> <a th:text="${cer.getWarehouseAddress()}"></a>
+        </form>
+      </td>
+    </tr>
+  </table>
+  <a th:href="'/maintenance/' + ${el.ID_Maintenance} + '/edit'">Редактировать</a>
+  <form th:action="'/maintenance/' + ${el.ID_Maintenance} + '/remove'" method="post">
+    <button type="submit" class="btn btn-del">Удалить</button>
+  </form>
+</div>
+</body>

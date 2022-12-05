@@ -27,7 +27,7 @@ public class GoodController {
     private com.example.personalproject.repos.GoodTypeRepository GoodTypeRepository;
     @Autowired
     private com.example.personalproject.repos.MaterialRepository MaterialRepository;
-
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN', 'MAINTENANCEWORKER', 'WAREHOUSEWORKER', 'QUALITYWORKER', 'GOODSWORKER')")
     @GetMapping("/good")
     public String goodMain(Model model)
     {
@@ -35,7 +35,7 @@ public class GoodController {
         model.addAttribute("goods", goods);
         return "good-main";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/good/add")
     public String goodAddPage(@ModelAttribute("good") ModelGood modelGood, Model ModelCertificate, Model ModelGoodType, Model ModelMaterial)
     {
@@ -48,7 +48,7 @@ public class GoodController {
 
         return "good-add";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("/good/add")
     public String goodAdd(@ModelAttribute("good") @Valid ModelGood modelGood, BindingResult bindingResult, @RequestParam String certificateName, Model ModelCertificate, @RequestParam String goodTypeName, Model ModelGoodType, @RequestParam String materialName, Model ModelMaterial)
     {
@@ -83,7 +83,7 @@ public class GoodController {
         model.addAttribute("result", result);
         return "good-filter";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/good/{ID_Good}")
     public String goodDetails(@PathVariable(value = "ID_Good") long ID_Good, Model model)
     {
@@ -97,6 +97,7 @@ public class GoodController {
         }
         return "good-details";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/good/{ID_Good}/edit")
     public String goodEdit(@PathVariable("ID_Good") long ID_Good, Model ModelGood, @ModelAttribute("good") ModelGood modelGood, Model ModelGoodType, Model ModelMaterial, Model ModelCertificate)
     {
@@ -116,7 +117,7 @@ public class GoodController {
         ModelGood.addAttribute("modelGood",res);
         return "good-edit";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("/good/{ID_Good}/edit")
     public String goodUpdate(@PathVariable("ID_Good") long ID_Good,
                              @ModelAttribute("good") @Valid ModelGood modelGood, BindingResult bindingResult, @RequestParam String certificateName, Model ModelCertificate, @RequestParam String goodTypeName, Model ModelGoodType, @RequestParam String materialName, Model ModelMaterial )
@@ -136,12 +137,14 @@ public class GoodController {
         goodRepository.save(modelGood);
         return "good-main";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("good/{ID_Good}/remove")
     public String goodDelete(@PathVariable("ID_Good") long ID_Good, Model model){
         ModelGood good = goodRepository.findById(ID_Good).orElseThrow();
         goodRepository.delete(good);
         return "redirect:/good";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/material")
     public String materialMain(Model model)
     {
@@ -149,13 +152,13 @@ public class GoodController {
         model.addAttribute("materials", materials);
         return "material-main";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/material/add")
     public String materialAddPage(@ModelAttribute("material") ModelMaterial modelMaterial)
     {
         return "material-add";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("/material/add")
     public String materialAdd(@ModelAttribute("material") @Valid ModelMaterial modelMaterial, BindingResult bindingResult)
     {
@@ -166,6 +169,7 @@ public class GoodController {
         MaterialRepository.save(modelMaterial);
         return "redirect:/material";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/material/{ID_Material}")
     public String materialDetails(@PathVariable(value = "ID_Material") long ID_Material, Model model)
     {
@@ -179,13 +183,14 @@ public class GoodController {
         }
         return "material-details";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("material/{ID_Material}/remove")
     public String materialDelete(@PathVariable("ID_Material") long ID_Material, Model model){
         ModelMaterial material = MaterialRepository.findById(ID_Material).orElseThrow();
         MaterialRepository.delete(material);
         return "redirect:/material";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/certificate")
     public String certificateMain(Model model)
     {
@@ -193,13 +198,13 @@ public class GoodController {
         model.addAttribute("certificates", certificates);
         return "certificate-main";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/certificate/add")
     public String certificateAddPage(@ModelAttribute("certificate") ModelCertificate modelCertificate)
     {
         return "certificate-add";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("/certificate/add")
     public String certificateAdd(@ModelAttribute("certificate") @Valid ModelCertificate modelCertificate, BindingResult bindingResult)
     {
@@ -223,12 +228,14 @@ public class GoodController {
         }
         return "certificate-details";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("certificate/{ID_Certificate}/remove")
     public String certificateDelete(@PathVariable("ID_Certificate") long ID_Certificate, Model model){
         ModelCertificate certificate = CertificateRepository.findById(ID_Certificate).orElseThrow();
         CertificateRepository.delete(certificate);
         return "redirect:/material";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/goodtype")
     public String goodtypeMain(Model model)
     {
@@ -236,13 +243,13 @@ public class GoodController {
         model.addAttribute("goodTypes", goodTypes);
         return "goodtype-main";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/goodtype/add")
     public String goodtypeAddPage(@ModelAttribute("goodtype") ModelGoodType modelGoodType)
     {
         return "goodtype-add";
     }
-
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("/goodtype/add")
     public String goodtypeAdd(@ModelAttribute("goodtype") @Valid ModelGoodType modelGoodType, BindingResult bindingResult)
     {
@@ -253,6 +260,7 @@ public class GoodController {
         GoodTypeRepository.save(modelGoodType);
         return "redirect:/goodtype";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @GetMapping("/goodtype/{ID_GoodType}")
     public String goodtypeDetails(@PathVariable(value = "ID_GoodType") long ID_GoodType, Model model)
     {
@@ -266,6 +274,7 @@ public class GoodController {
         }
         return "goodtype-details";
     }
+    @PreAuthorize("hasAnyAuthority('GOODSWORKER')")
     @PostMapping("goodtype/{ID_GoodType}/remove")
     public String goodtypeDelete(@PathVariable("ID_GoodType") long ID_GoodType, Model model){
         ModelGoodType goodType = GoodTypeRepository.findById(ID_GoodType).orElseThrow();

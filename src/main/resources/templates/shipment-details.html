@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${shipment}">
+  <h3>Подробнее про поставку: </h3> <h3 th:text="${el.shipmentDate}"></h3>
+  <table>
+    <tr>
+      <td>><a>Дата поставки:</a>
+        <a th:text="${el.shipmentDate}"></a>
+      </td>
+      </tr>
+    <tr>
+      <td>
+        <form th:each="mat : ${el.getUser()}">
+        <a>>Ответственный: </a> <a th:text="${mat.getUsername()}"></a>
+      </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <form th:each="cer : ${el.getGood()}">
+        <a>>Товар: </a> <a th:text="${cer.getGoodName()}"></a>
+      </form>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <form th:each="war : ${el.getWarehouse()}">
+        <a>>Склад: </a> <a th:text="${war.getWarehouseAddress()}"></a>
+      </form>
+      </td>
+    </tr>
+  </table>
+  <form th:action="'/shipment/' + ${el.ID_Shipment} + '/remove'" method="post">
+    <button type="submit" class="btn btn-del">Удалить</button>
+  </form>
+</div>
+</body>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Title</title>
+
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+
+
+<div class="container">
+  <h1 class="center">Обслуживание</h1>
+  <a th:href="'/maintenance/add'">Добавить запрос</a>
+  <div th:each="el : ${maintenances}">
+    <article class="episode">
+
+      <div class="episode__number" th:text="${el.ID_Maintenance}"></div>
+      <div class="episode__content">
+        <div class="title" th:text="${el.maintenanceDate}"></div>
+        <div class="story">
+          <table>
+            <tr>
+              <td>
+                  <a>>Текст: </a> <a th:text="${el.maintenanceText}"></a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a>>Статус: </a> <a th:text="${el.maintenanceStatus}"></a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form th:each="mat : ${el.getUser()}">
+                  <a>>Выполнил: </a> <a th:text="${mat.getUsername()}"></a>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <form th:each="cer : ${el.getWarehouse()}">
+                  <a>>Склад: </a> <a th:text="${cer.getWarehouseAddress()}"></a>
+                </form>
+              </td>
+            </tr>
+          </table>
+          <a th:href="'/maintenance/' + ${el.ID_Maintenance}">Подробнее</a>
+        </div>
+      </div>
+
+    </article>
+  </div>
+
+</div>
+</body>
+</html>

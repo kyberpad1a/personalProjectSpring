@@ -6,6 +6,7 @@ import com.example.personalproject.models.ModelQuality;
 import com.example.personalproject.repos.QualityRepository;
 import com.example.personalproject.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +20,11 @@ import java.util.Optional;
 public class QualityController {
     @Autowired
     private com.example.personalproject.repos.goodRepository goodRepository;
+    @Autowired
     private UserRepository UserRepository;
+    @Autowired
     private QualityRepository QualityRepository;
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
     @GetMapping("/quality")
     public String qualityMain(Model model)
     {
@@ -28,6 +32,7 @@ public class QualityController {
         model.addAttribute("qualities", qualities);
         return "quality-main";
     }
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
     @GetMapping("/quality/add")
     public String qualityAddPage(@ModelAttribute("quality") ModelQuality modelQuality, Model ModelGood, Model ModelUser)
     {
@@ -37,7 +42,8 @@ public class QualityController {
         ModelUser.addAttribute("user", users);
         return "quality-add";
     }
-    @PostMapping("/good/add")
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
+    @PostMapping("/quality/add")
     public String qualityAdd(@ModelAttribute("quality") @Valid ModelQuality modelQuality, BindingResult bindingResult, @RequestParam String username, Model ModelUser, @RequestParam String goodName, Model ModelGood)
     {
 
@@ -46,30 +52,31 @@ public class QualityController {
             ModelUser.addAttribute("user", users);
             Iterable<com.example.personalproject.models.ModelGood> goods = goodRepository.findAll();
             ModelGood.addAttribute("good", goods);
-            return "good-add";
+            return "quality-add";
         }
         modelQuality.setUser(UserRepository.findByUsername(username));
         modelQuality.setGood(goodRepository.findByGoodName(goodName));
 
         QualityRepository.save(modelQuality);
-        return "redirect:/good";
+        return "redirect:/quality";
     }
-
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
     @GetMapping("/quality/{ID_Quality}")
     public String qualityDetails(@PathVariable(value = "ID_Quality") long ID_Quality, Model model)
     {
-        Optional<ModelQuality> good = goodRepository.findById(ID_Good);
-        ArrayList<ModelGood> res = new ArrayList<>();
-        good.ifPresent(res::add);
-        model.addAttribute("good",res);
-        if(!goodRepository.existsById(ID_Good))
+        Optional<ModelQuality> quality = QualityRepository.findById(ID_Quality);
+        ArrayList<ModelQuality> res = new ArrayList<>();
+        quality.ifPresent(res::add);
+        model.addAttribute("quality",res);
+        if(!QualityRepository.existsById(ID_Quality))
         {
-            return "redirect:/good";
+            return "redirect:/quality";
         }
-        return "good-details";
+        return "quality-details";
     }
-    @GetMapping("/good/{ID_Good}/edit")
-    public String goodEdit(@PathVariable("ID_Good") long ID_Good, Model ModelGood, @ModelAttribute("good") ModelGood modelGood, Model ModelGoodType, Model ModelMaterial, Model ModelCertificate)
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
+    @GetMapping("/quality/{ID_Quality}/edit")
+    public String qualityEdit(@PathVariable("ID_Quality") long ID_Quality, Model ModelQuality, @ModelAttribute("quality") ModelQuality modelQuality, Model ModelGood, Model ModelUser)
     {
         /*if(!goodRepository.existsById(ID_Good)){
             return "redirect:/good";
@@ -77,40 +84,37 @@ public class QualityController {
         Optional<modelGood> good = goodRepository.findById(ID_Good);
         ArrayList<modelGood> res = new ArrayList<>();
         good.ifPresent(res::add);*/
-        Iterable<com.example.personalproject.models.ModelCertificate> certificates = CertificateRepository.findAll();
-        ModelCertificate.addAttribute("certificate", certificates);
-        Iterable<com.example.personalproject.models.ModelGoodType> goodTypes = GoodTypeRepository.findAll();
-        ModelGoodType.addAttribute("goodType", goodTypes);
-        Iterable<com.example.personalproject.models.ModelMaterial> materials = MaterialRepository.findAll();
-        ModelMaterial.addAttribute("material", materials);
-        ModelGood res = goodRepository.findById(ID_Good).orElseThrow();
-        ModelGood.addAttribute("modelGood",res);
-        return "good-edit";
+        Iterable<com.example.personalproject.models.ModelUser> users = UserRepository.findAll();
+        ModelUser.addAttribute("user", users);
+        Iterable<com.example.personalproject.models.ModelGood> goods = goodRepository.findAll();
+        ModelGood.addAttribute("good", goods);
+        ModelQuality res = QualityRepository.findById(ID_Quality).orElseThrow();
+        ModelQuality.addAttribute("modelQuality",res);
+        return "quality-edit";
     }
-
-    @PostMapping("/good/{ID_Good}/edit")
-    public String goodUpdate(@PathVariable("ID_Good") long ID_Good,
-                             @ModelAttribute("good") @Valid ModelGood modelGood, BindingResult bindingResult, @RequestParam String certificateName, Model ModelCertificate, @RequestParam String goodTypeName, Model ModelGoodType, @RequestParam String materialName, Model ModelMaterial )
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
+    @PostMapping("/quality/{ID_Quality}/edit")
+    public String qualityUpdate(@PathVariable("ID_Quality") long ID_Quality,
+                             @ModelAttribute("quality") @Valid ModelQuality modelQuality, BindingResult bindingResult, @RequestParam String username, Model ModelUser, @RequestParam String goodName, Model ModelGood)
     {
         if (bindingResult.hasErrors()) {
-            Iterable<ModelCertificate> certificates = CertificateRepository.findAll();
-            ModelCertificate.addAttribute("certificate", certificates);
-            Iterable<com.example.personalproject.models.ModelGoodType> goodTypes = GoodTypeRepository.findAll();
-            ModelGoodType.addAttribute("goodType", goodTypes);
-            Iterable<com.example.personalproject.models.ModelMaterial> materials = MaterialRepository.findAll();
-            ModelMaterial.addAttribute("material", materials);
-            return "good-edit";
+            Iterable<com.example.personalproject.models.ModelUser> users = UserRepository.findAll();
+            ModelUser.addAttribute("user", users);
+            Iterable<com.example.personalproject.models.ModelGood> goods = goodRepository.findAll();
+            ModelGood.addAttribute("good", goods);
+            return "quality-edit";
         }
-        modelGood.setCertificate(CertificateRepository.findByCertificateName(certificateName));
-        modelGood.setGoodType(GoodTypeRepository.findByGoodTypeName(goodTypeName));
-        modelGood.setMaterial(MaterialRepository.findByMaterialName(materialName));
-        goodRepository.save(modelGood);
-        return "good-main";
+        modelQuality.setUser(UserRepository.findByUsername(username));
+        modelQuality.setGood(goodRepository.findByGoodName(goodName));
+
+        QualityRepository.save(modelQuality);
+        return "quality-main";
     }
-    @PostMapping("good/{ID_Good}/remove")
-    public String goodDelete(@PathVariable("ID_Good") long ID_Good, Model model){
-        ModelGood good = goodRepository.findById(ID_Good).orElseThrow();
-        goodRepository.delete(good);
-        return "redirect:/good";
+    @PreAuthorize("hasAnyAuthority('QUALITYWORKER')")
+    @PostMapping("quality/{ID_Quality}/remove")
+    public String qualityDelete(@PathVariable("ID_Quality") long ID_Quality, Model model){
+        ModelQuality quality = QualityRepository.findById(ID_Quality).orElseThrow();
+        QualityRepository.delete(quality);
+        return "redirect:/quality";
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<form th:action="${'/quality/add'}" method="post" th:object="${quality}" >
+  <input type="date" th:field="*{dateOfCompletion}" name="dateOfCompletion" placeholder="Введите дату">
+  <div style="color: red" th:if="${#fields.hasErrors('dateOfCompletion')}" th:errors="*{dateOfCompletion}"></div>
+  <input type="text" th:field="*{comments}" name="comments" placeholder="Введите комментарии">
+  <div style="color: red" th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}"></div>
+  <select name="username">
+    <div th:each="element : ${user}">
+      <option th:text="${element.getUsername()}"></option>
+    </div>
+  </select>
+  <select name="goodName">
+    <div th:each="element : ${good}">
+      <option th:text="${element.getGoodName()}"></option>
+    </div>
+  </select>
+  <br>
+  <button type="submit">Добавить</button>
+</form>
+</body>
+</html>

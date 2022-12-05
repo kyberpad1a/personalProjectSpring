@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<form th:action="${'/warehouse/add'}" method="post" th:object="${warehouse}" >
+  <input type="text" th:field="*{warehouseAddress}" name="warehouseAddress" placeholder="Введите адрес">
+  <div style="color: red" th:if="${#fields.hasErrors('warehouseAddress')}" th:errors="*{warehouseAddress}"></div>
+  <br>
+  <button type="submit">Добавить</button>
+</form>
+</body>
+</html>

@@ -10,11 +10,11 @@ public class ModelShipment {
     @GeneratedValue
     private Long ID_Shipment;
     private Date shipmentDate;
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     private ModelGood good;
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     private ModelWarehouse warehouse;
-    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @ManyToOne(optional = true)
     private ModelUser user;
 
     public ModelShipment(Date shipmentDate, ModelGood good, ModelWarehouse warehouse, ModelUser user) {
