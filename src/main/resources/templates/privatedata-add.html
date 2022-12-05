@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<form th:action="${'/registration/privatedata/add'}" method="post" th:object="${privatedata}">
+  <input type="text" th:field="*{surname}" name="surname" placeholder="Введите фамилию">
+  <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+  <input type="text" th:field="*{name}" name="name"  placeholder="Введите имя">
+  <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+  <input type="text" th:field="*{patronymic}" name="patronymic"  placeholder="Введите отчество">
+  <div style="color: red" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></div>
+  <input type="number" th:field="*{omsNumber}" name="omsNumber"  placeholder="Введите номер ОМС" maxlength="16">
+  <div style="color: red" th:if="${#fields.hasErrors('omsNumber')}" th:errors="*{omsNumber}"></div>
+  <select  name="pasportNumber">
+    <div th:each="element : ${pasportdata}">
+      <option th:text="${element.getPasportNumber()}"></option>
+    </div>
+  </select>
+  <br>
+  <button type="submit">Продолжить</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Title</title>
+
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+
+
+<div class="container">
+    <h1 class="center">Товары</h1>
+    <a th:href="'/good/add'">Добавить товар</a>
+    <div th:each="el : ${goods}">
+        <article class="episode">
+
+            <div class="episode__number" th:text="${el.ID_Good}"></div>
+            <div class="episode__content">
+                <div class="title" th:text="${el.goodName}"></div>
+                <div class="story">
+                    <table>
+                        <tr>
+
+                            <td>><a>Вес:</a>
+                                <a th:text="${el.goodWeight}"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form th:each="mat : ${el.getMaterial()}">
+                                    <a>>Материал: </a> <a th:text="${mat.getMaterialName()}"></a>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form th:each="cer : ${el.getCertificate()}">
+                                    <a>>Сертификат: </a> <a th:text="${cer.getCertificateName()}"></a>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form th:each="gty : ${el.getGoodType()}">
+                                    <a>>Тип товара: </a> <a th:text="${gty.getGoodTypeName()}"></a>
+                                </form>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <a th:href="'/good/' + ${el.ID_Good}">Подробнее</a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+</div>
+</body>
+</html>

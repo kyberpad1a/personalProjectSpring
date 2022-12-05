@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${material}">
+  <h3>Подробнее про Материал: </h3> <h3 th:text="${el.materialName}"></h3>
+  <p th:text="${el.materialName}"></p>
+  <form th:action="'/material/' + ${el.ID_Material} + '/remove'" method="post">
+    <button type="submit" class="btn btn-del">Удалить</button>
+  </form>
+</div>
+</body>

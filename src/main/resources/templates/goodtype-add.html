@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<form th:action="${'/goodtype/add'}" method="post" th:object="${goodtype}" >
+    <input type="text" th:field="*{goodTypeName}" name="goodTypeName" placeholder="Введите название">
+    <div style="color: red" th:if="${#fields.hasErrors('goodTypeName')}" th:errors="*{goodTypeName}"></div>
+    <br>
+    <button type="submit">Добавить</button>
+</form>
+</body>
+</html>

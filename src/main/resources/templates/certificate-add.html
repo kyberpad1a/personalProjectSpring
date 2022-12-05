@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<form th:action="${'/certificate/add'}" method="post" th:object="${certificate}" >
+  <input type="text" th:field="*{certificateName}" name="certificateName" placeholder="Введите название">
+  <div style="color: red" th:if="${#fields.hasErrors('certificateName')}" th:errors="*{certificateName}"></div>
+  <input type="date" th:field="*{expirationDate}" name="expirationDate" placeholder="Введите дату">
+  <div style="color: red" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></div>
+  <br>
+  <button type="submit">Добавить</button>
+</form>
+</body>
+</html>

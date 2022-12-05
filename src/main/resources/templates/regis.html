@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:if="${message}">
+  Пользователь уже существует
+</div>
+<form th:action="@{/registration}" method="post">
+  <div><label> Логин : <input type="text" name="username"/> </label></div>
+  <div><label> Пароль : <input type="password" name="password"/> </label></div>
+    <select  name="omsNumber">
+        <div th:each="element : ${privatedata}">
+            <option th:text="${element.getOmsNumber()}"></option>
+        </div>
+    </select>
+  <div><input type="submit" value="Регистрация"/></div>
+</form>
+</body>
+</html>

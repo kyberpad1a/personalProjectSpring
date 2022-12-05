@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<form th:action="${'/registration/pasport/add'}" method="post" th:object="${pasportdata}" >
+  <input type="number" th:field="*{pasportSeries}" name="pasportSeries" placeholder="Введите серию" maxlength="4">
+  <div style="color: red" th:if="${#fields.hasErrors('pasportSeries')}" th:errors="*{pasportSeries}"></div>
+  <input type="number" th:field="*{pasportNumber}" name="pasportNumber" placeholder="Введите номер" maxlength="6">
+  <div style="color: red" th:if="${#fields.hasErrors('pasportNumber')}" th:errors="*{pasportNumber}"></div>
+  <br>
+  <button type="submit">Продолжить</button>
+</form>
+</body>
+</html>

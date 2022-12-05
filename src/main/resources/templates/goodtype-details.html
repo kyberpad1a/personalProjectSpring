@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${goodType}">
+  <h3>Подробнее про тип товара: </h3> <h3 th:text="${el.goodTypeName}"></h3>
+  <table>
+    <tr>
+      <td>><a>Название типа товара:</a>
+        <a th:text="${el.goodTypeName}"></a>
+      </td>
+    </tr>
+  </table>
+  <form th:action="'/goodtype/' + ${el.ID_GoodType} + '/remove'" method="post">
+    <button type="submit" class="btn btn-del">Удалить</button>
+  </form>
+</div>
+</body>

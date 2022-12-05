@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/list.css}" rel="stylesheet" />
+</head>
+<body class="body">
+<div th:insert="blocks/header"></div>
+<div th:each="el : ${modelGood}">
+    <form method="post" th:object="${modelGood}">
+        <input type="text" th:field="*{goodName}" th:value="${modelGood.goodName}" name="goodName" placeholder="Введите название товара">
+        <div style="color: red" th:if="${#fields.hasErrors('goodName')}" th:errors="*{goodName}"></div>
+        <input type="text" th:field="*{goodWeight}" th:value="${modelGood.goodWeight}" name="goodWeight"  placeholder="Введите вес">
+        <div style="color: red" th:if="${#fields.hasErrors('goodWeight')}" th:errors="*{goodWeight}"></div>
+        <select  name="goodTypeName">
+            <div th:each="element : ${goodType}">
+                <option th:text="${element.getGoodTypeName()}"></option>
+            </div>
+        </select>
+        <select  name="materialName">
+            <div th:each="element : ${material}">
+                <option th:text="${element.getMaterialName()}"></option>
+            </div>
+        </select>
+        <select  name="certificateName">
+            <div th:each="element : ${certificate}">
+                <option th:text="${element.getCertificateName()}"></option>
+            </div>
+        </select>
+        <br>
+        <button type="submit">Изменить товар</button>
+    </form>
+</div>
+</body>
+</html>
