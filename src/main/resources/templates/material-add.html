@@ -8,8 +8,15 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/material/add'}" method="post" th:object="${material}" >
-  <input type="text" th:field="*{materialName}" name="materialName" placeholder="Введите название">
-  <div style="color: red" th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></div>
+    <table>
+        <tr>
+            <td> <a>Название материала: </a>
+                <input type="text" th:field="*{materialName}" name="materialName" placeholder="Введите название">
+                <div style="color: red" th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></div>
+            </td>
+        </tr>
+    </table>
+
   <br>
   <button type="submit">Добавить</button>
 </form>

@@ -21,7 +21,7 @@ public class ModelPasportData {
     @Min(value = 4, message = "Серия должна содержать 4 цифры")
     //@Max(value = 4, message = "Серия должна содержать 4 цифры")
     private int pasportSeries;
-    @OneToOne(optional = true, mappedBy = "employeePasport")
+    @OneToOne(optional = true, mappedBy = "employeePasport", cascade = CascadeType.ALL)
     private ModelPrivateData owner;
 
     public ModelPasportData(int pasportNumber, int pasportSeries) {

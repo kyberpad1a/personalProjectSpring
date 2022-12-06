@@ -3,16 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/css/list.css}" rel="stylesheet" />
 </head>
+<style>
+    body {
+        font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+        background: #2c3338;
+        color: #fff;
+        padding: 50px 0;
+    }
+
+    .container {
+        width: 80%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .container * {
+        box-sizing: border-box;
+    }
+
+    .flex-outer,
+    .flex-inner {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .flex-outer {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .flex-outer li,
+    .flex-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .flex-inner {
+        padding: 0 8px;
+        justify-content: space-between;
+    }
+
+    .flex-outer > li:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    .flex-outer li label,
+    .flex-outer li p {
+        padding: 8px;
+        font-weight: 300;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+    }
+
+    .flex-outer > li > label,
+    .flex-outer li p {
+        flex: 1 0 120px;
+        max-width: 220px;
+    }
+
+    .flex-outer > li > label + *,
+    .flex-inner {
+        flex: 1 0 220px;
+    }
+
+    .flex-outer li p {
+        margin: 0;
+    }
+
+    .flex-outer li input:not([type='checkbox']),
+    .flex-outer li textarea {
+        padding: 15px;
+        border: none;
+    }
+
+    .flex-outer li button {
+        margin-left: auto;
+        padding: 8px 16px;
+        border: none;
+        background: #333;
+        color: #f2f2f2;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+        border-radius: 2px;
+    }
+
+    .flex-inner li {
+        width: 100px;
+    }
+</style>
 <body class="body">
-<form th:action="${'/registration/pasport/add'}" method="post" th:object="${pasportdata}" >
-  <input type="number" th:field="*{pasportSeries}" name="pasportSeries" placeholder="Введите серию" maxlength="4">
-  <div style="color: red" th:if="${#fields.hasErrors('pasportSeries')}" th:errors="*{pasportSeries}"></div>
-  <input type="number" th:field="*{pasportNumber}" name="pasportNumber" placeholder="Введите номер" maxlength="6">
-  <div style="color: red" th:if="${#fields.hasErrors('pasportNumber')}" th:errors="*{pasportNumber}"></div>
-  <br>
-  <button type="submit">Продолжить</button>
-</form>
+<div class="container">
+    <form th:action="${'/registration/pasport/add'}" method="post" th:object="${pasportdata}">
+        <ul class="flex-outer">
+            <li>
+                <label>Passport Series</label>
+                <input type="number" th:field="*{pasportSeries}" name="pasportSeries" placeholder="Введите серию" maxlength="4">
+                <div style="color: red" th:if="${#fields.hasErrors('pasportSeries')}" th:errors="*{pasportSeries}"></div>
+                            </li>
+                            <li>
+                                <label>Pasport Number</label>
+                                <input type="number" th:field="*{pasportNumber}" name="pasportNumber" placeholder="Введите номер" maxlength="6">
+                                <div style="color: red" th:if="${#fields.hasErrors('pasportNumber')}" th:errors="*{pasportNumber}"></div>
+                                                            </li>
+                                                            <li>
+                                                                <button type="submit">Продолжить</button>
+                                                            </li>
+                                                        </ul>
+                                                    </form>
+                                                </div>
+                                                <!--<form th:action="${'/registration/pasport/add'}" method="post" th:object="${pasportdata}" >-->
+<!--  <input type="number" th:field="*{pasportSeries}" name="pasportSeries" placeholder="Введите серию" maxlength="4">-->
+<!--  <div style="color: red" th:if="${#fields.hasErrors('pasportSeries')}" th:errors="*{pasportSeries}"></div>-->
+<!--  <input type="number" th:field="*{pasportNumber}" name="pasportNumber" placeholder="Введите номер" maxlength="6">-->
+<!--  <div style="color: red" th:if="${#fields.hasErrors('pasportNumber')}" th:errors="*{pasportNumber}"></div>-->
+<!--  <br>-->
+<!--  <button type="submit">Продолжить</button>-->
+<!--</form>-->
 </body>
 </html>

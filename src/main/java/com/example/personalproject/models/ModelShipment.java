@@ -1,6 +1,7 @@
 package com.example.personalproject.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 @Entity
@@ -9,12 +10,13 @@ public class ModelShipment {
     @Id
     @GeneratedValue
     private Long ID_Shipment;
+    @NotNull(message = "Поле не должно быть пустым")
     private Date shipmentDate;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelGood good;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelWarehouse warehouse;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelUser user;
 
     public ModelShipment(Date shipmentDate, ModelGood good, ModelWarehouse warehouse, ModelUser user) {

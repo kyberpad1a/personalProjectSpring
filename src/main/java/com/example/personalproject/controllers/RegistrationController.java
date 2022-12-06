@@ -36,12 +36,16 @@ public class RegistrationController {
         return "regis";
     }
     @PostMapping("/registration")
-    private String Reg(ModelUser user, Model model, @RequestParam String omsNumber, Model ModelPrivateData)
+    private String Reg(@Valid ModelUser user, BindingResult bindingResult, Model model, @RequestParam String omsNumber)
     {
         ModelUser user_from_db = UserRepository.findByUsername(user.getUsername());
         if (user_from_db != null)
         {
             model.addAttribute("message", "Пользователь с таким логином уже существует");
+            return "regis";
+        }
+        if(bindingResult.hasErrors()) {
+
             return "regis";
         }
 

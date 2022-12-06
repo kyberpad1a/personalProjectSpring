@@ -2,6 +2,8 @@ package com.example.personalproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Entity
@@ -10,8 +12,10 @@ public class ModelMaintenance {
     @Id
     @GeneratedValue
     private Long ID_Maintenance;
+    @NotNull
     private Date maintenanceDate;
     @NotBlank
+    @Size(max = 200, message = "Длина поля не может превышать 200 символов")
     private String maintenanceText;
     private boolean maintenanceStatus;
     @ManyToOne(optional = true, cascade = CascadeType.ALL)

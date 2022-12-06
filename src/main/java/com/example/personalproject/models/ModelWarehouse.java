@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -14,6 +15,7 @@ public class ModelWarehouse {
     @GeneratedValue
     private Long ID_Warehouse;
     @NotBlank
+    @Size(max = 80, message = "Поле не может содержать более 80 символов")
     private String warehouseAddress;
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)

@@ -2,6 +2,7 @@ package com.example.personalproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import java.util.Collection;
 
@@ -12,6 +13,7 @@ public class ModelMaterial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID_Material;
     @NotBlank
+    @Size(max = 40, message = "Длина поля не может превышать 40 символов")
     private String materialName;
     @OneToMany(mappedBy = "material", fetch = FetchType.EAGER)
     private Collection<ModelGood> modelGood;

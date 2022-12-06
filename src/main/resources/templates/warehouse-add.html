@@ -8,8 +8,15 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/warehouse/add'}" method="post" th:object="${warehouse}" >
-  <input type="text" th:field="*{warehouseAddress}" name="warehouseAddress" placeholder="Введите адрес">
-  <div style="color: red" th:if="${#fields.hasErrors('warehouseAddress')}" th:errors="*{warehouseAddress}"></div>
+  <table>
+    <tr>
+      <td> <a>Склад: </a>
+        <input type="text" th:field="*{warehouseAddress}" name="warehouseAddress" placeholder="Введите адрес">
+        <div style="color: red" th:if="${#fields.hasErrors('warehouseAddress')}" th:errors="*{warehouseAddress}"></div>
+      </td>
+    </tr>
+  </table>
+
   <br>
   <button type="submit">Добавить</button>
 </form>

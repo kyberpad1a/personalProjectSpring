@@ -2,6 +2,7 @@ package com.example.personalproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import java.util.Collection;
 
@@ -12,6 +13,7 @@ public class ModelGoodType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID_GoodType;
     @NotBlank(message = "Поле не может быть пустым")
+    @Size(max = 50, message = "Длина поля не может превышать 50 символов")
     private String goodTypeName;
     @OneToMany(mappedBy = "goodType", fetch = FetchType.EAGER)
     private Collection<ModelGood> modelGoodCollection;

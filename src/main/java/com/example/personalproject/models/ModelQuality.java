@@ -2,6 +2,8 @@ package com.example.personalproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.sql.Date;
 
@@ -11,12 +13,14 @@ public class ModelQuality {
     @Id
     @GeneratedValue
     private Long ID_Quality;
+    @NotNull(message = "Поле не может быть пустым")
     private Date dateOfCompletion;
     @NotBlank
+    @Size(max = 100, message = "Поле не может содержать больше 100 символов")
     private String comments;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelUser user;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelGood good;
 
     public ModelQuality(Date dateOfCompletion, String comments, ModelUser user, ModelGood good) {

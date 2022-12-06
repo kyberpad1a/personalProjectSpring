@@ -8,10 +8,16 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/goodtype/add'}" method="post" th:object="${goodtype}" >
+    <table>
+        <tr>
+    <td><a>Название типа товара: </a>
     <input type="text" th:field="*{goodTypeName}" name="goodTypeName" placeholder="Введите название">
     <div style="color: red" th:if="${#fields.hasErrors('goodTypeName')}" th:errors="*{goodTypeName}"></div>
+    </td>
     <br>
     <button type="submit">Добавить</button>
+        </tr>
+    </table>
 </form>
 </body>
 </html>

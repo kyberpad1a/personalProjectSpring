@@ -1,10 +1,7 @@
 package com.example.personalproject.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 
 @Entity
 public class ModelPrivateData {
@@ -13,18 +10,19 @@ public class ModelPrivateData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long IDPrivateData;
     @NotBlank
+    @Size(max = 35, message = "Поле не может содержать больше 35 символов")
     private String surname;
     @NotBlank
+    @Size(max = 35, message = "Поле не может содержать больше 35 символов")
     private String name;
-
+    @Size(max = 35, message = "Поле не может содержать больше 35 символов")
     private String patronymic;
-    @Min(value = 16, message = "Полис ОМС состоит из 16 цифр")
-
+    @Size(min = 16, max = 16,  message = "Полис ОМС состоит из 16 цифр")
     private String omsNumber;
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @OneToOne(optional = true)
     @JoinColumn(name="pasportdata_id")
     private ModelPasportData employeePasport;
-    @OneToOne(optional = true, mappedBy = "privateData")
+    @OneToOne(optional = true, mappedBy = "privateData", cascade = CascadeType.ALL)
     private ModelUser owner;
 
     public ModelPrivateData(String surname, String name, String patronymic, String omsNumber, ModelPasportData employeePasport, ModelUser owner) {

@@ -15,16 +15,17 @@ public class ModelGood {
     private Long ID_Good;
     @NotNull
     @NotBlank(message = "Пустое поле")
+    @Size(max = 40, message = "Длина поля не может превышать 40 символов")
     private String goodName;
     @NotNull
     @Positive(message = "Вес не может быть отрицательным")
     @Digits(integer = 3, fraction = 1, message = "Количество символов слева от запятой не может превышать 3, справа - 1")
     private double goodWeight;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelCertificate certificate;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelGoodType goodType;
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelMaterial material;
     @OneToMany(mappedBy = "good", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)

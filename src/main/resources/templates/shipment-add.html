@@ -8,23 +8,38 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/shipment/add'}" method="post" th:object="${shipment}" >
-  <input type="date" th:field="*{shipmentDate}" name="shipmentDate" placeholder="Введите дату">
-  <div style="color: red" th:if="${#fields.hasErrors('shipmentDate')}" th:errors="*{shipmentDate}"></div>
-  <select name="username">
-    <div th:each="element : ${user}">
-      <option th:text="${element.getUsername()}"></option>
-    </div>
-  </select>
-  <select name="goodName">
-    <div th:each="element : ${good}">
-      <option th:text="${element.getGoodName()}"></option>
-    </div>
-  </select>
-  <select name="warehouseAddress">
-    <div th:each="element : ${warehouse}">
-      <option th:text="${element.getWarehouseAddress()}"></option>
-    </div>
-  </select>
+  <table>
+    <tr>
+      <td><a>Дата поставки: </a>
+        <input type="date" th:field="*{shipmentDate}" name="shipmentDate" placeholder="Введите дату">
+        <div style="color: red" th:if="${#fields.hasErrors('shipmentDate')}" th:errors="*{shipmentDate}"></div>
+      </td>
+      <td><a>Добавил: </a>
+        <select name="username">
+          <div th:each="element : ${user}">
+            <option th:text="${element.getUsername()}"></option>
+          </div>
+        </select>
+      </td>
+      <td><a>Название товара: </a>
+        <select name="goodName">
+          <div th:each="element : ${good}">
+            <option th:text="${element.getGoodName()}"></option>
+          </div>
+        </select>
+      </td>
+      <td>  <a>Склад: </a>
+        <select name="warehouseAddress">
+        <div th:each="element : ${warehouse}">
+          <option th:text="${element.getWarehouseAddress()}"></option>
+        </div>
+      </select></td>
+    </tr>
+  </table>
+
+
+
+
   <br>
   <button type="submit">Добавить</button>
 </form>

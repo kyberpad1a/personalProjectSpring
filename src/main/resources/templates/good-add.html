@@ -8,25 +8,39 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/good/add'}" method="post" th:object="${good}" >
+  <table>
+    <tr>
+      <td><a>Название товара: </a>
   <input type="text" th:field="*{goodName}" name="goodName" placeholder="Введите название">
   <div style="color: red" th:if="${#fields.hasErrors('goodName')}" th:errors="*{goodName}"></div>
+      </td>
+      <td><a>Вес товара: </a>
   <input type="text" th:field="*{goodWeight}" name="goodWeight" placeholder="Введите вес">
   <div style="color: red" th:if="${#fields.hasErrors('goodWeight')}" th:errors="*{goodWeight}"></div>
+      </td>
+      <td><a>Тип товара: </a>
   <select  name="goodTypeName">
     <div th:each="element : ${goodType}">
       <option th:text="${element.getGoodTypeName()}"></option>
     </div>
   </select>
+      </td>
+      <td><a>Название материала: </a>
   <select  name="materialName">
     <div th:each="element : ${material}">
       <option th:text="${element.getMaterialName()}"></option>
     </div>
   </select>
+      </td>
+      <td><a>Название сертификата: </a>
   <select  name="certificateName">
     <div th:each="element : ${certificate}">
       <option th:text="${element.getCertificateName()}"></option>
     </div>
   </select>
+      </td>
+    </tr>
+  </table>
   <br>
   <button type="submit">Добавить</button>
 </form>

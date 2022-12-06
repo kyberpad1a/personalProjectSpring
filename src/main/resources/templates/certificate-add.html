@@ -8,10 +8,18 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form th:action="${'/certificate/add'}" method="post" th:object="${certificate}" >
-  <input type="text" th:field="*{certificateName}" name="certificateName" placeholder="Введите название">
-  <div style="color: red" th:if="${#fields.hasErrors('certificateName')}" th:errors="*{certificateName}"></div>
+  <table>
+    <tr>
+    <td><a>Название сертификата: </a>
+      <input type="text" th:field="*{certificateName}" name="certificateName" placeholder="Введите название">
+      <div style="color: red" th:if="${#fields.hasErrors('certificateName')}" th:errors="*{certificateName}"></div>
+    </td>
+      <td><a>Дата истечения: </a>
   <input type="date" th:field="*{expirationDate}" name="expirationDate" placeholder="Введите дату">
   <div style="color: red" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></div>
+  </td>
+    </tr>
+  </table>
   <br>
   <button type="submit">Добавить</button>
 </form>

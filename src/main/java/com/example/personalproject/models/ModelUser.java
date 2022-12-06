@@ -5,6 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import java.util.Collection;
 import java.util.Set;
@@ -16,8 +17,10 @@ public class ModelUser {
     @Id
     private Long ID_User;
     @NotBlank
+    @Size(max = 50, message = "Поле не может содержать более 50 символов")
     private String username;
     @NotBlank
+    @Size(max = 100)
     private String password;
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name="privatedata_id")

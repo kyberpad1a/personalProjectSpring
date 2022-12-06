@@ -9,27 +9,41 @@
 <div th:insert="blocks/header"></div>
 <div th:each="el : ${modelGood}">
     <form method="post" th:object="${modelGood}">
-        <input type="text" th:field="*{goodName}" th:value="${modelGood.goodName}" name="goodName" placeholder="Введите название товара">
-        <div style="color: red" th:if="${#fields.hasErrors('goodName')}" th:errors="*{goodName}"></div>
-        <input type="text" th:field="*{goodWeight}" th:value="${modelGood.goodWeight}" name="goodWeight"  placeholder="Введите вес">
-        <div style="color: red" th:if="${#fields.hasErrors('goodWeight')}" th:errors="*{goodWeight}"></div>
-        <select  name="goodTypeName">
-            <div th:each="element : ${goodType}">
-                <option th:text="${element.getGoodTypeName()}"></option>
-            </div>
-        </select>
-        <select  name="materialName">
-            <div th:each="element : ${material}">
-                <option th:text="${element.getMaterialName()}"></option>
-            </div>
-        </select>
-        <select  name="certificateName">
-            <div th:each="element : ${certificate}">
-                <option th:text="${element.getCertificateName()}"></option>
-            </div>
-        </select>
+        <table>
+            <tr>
+                <td><a>Название товара: </a>
+                    <input type="text" th:field="*{goodName}" name="goodName" placeholder="Введите название">
+                    <div style="color: red" th:if="${#fields.hasErrors('goodName')}" th:errors="*{goodName}"></div>
+                </td>
+                <td><a>Вес товара: </a>
+                    <input type="text" th:field="*{goodWeight}" name="goodWeight" placeholder="Введите вес">
+                    <div style="color: red" th:if="${#fields.hasErrors('goodWeight')}" th:errors="*{goodWeight}"></div>
+                </td>
+                <td><a>Тип товара: </a>
+                    <select  name="goodTypeName">
+                        <div th:each="element : ${goodType}">
+                            <option th:text="${element.getGoodTypeName()}"></option>
+                        </div>
+                    </select>
+                </td>
+                <td><a>Название материала: </a>
+                    <select  name="materialName">
+                        <div th:each="element : ${material}">
+                            <option th:text="${element.getMaterialName()}"></option>
+                        </div>
+                    </select>
+                </td>
+                <td><a>Название сертификата: </a>
+                    <select  name="certificateName">
+                        <div th:each="element : ${certificate}">
+                            <option th:text="${element.getCertificateName()}"></option>
+                        </div>
+                    </select>
+                </td>
+            </tr>
+        </table>
         <br>
-        <button type="submit">Изменить товар</button>
+        <button type="submit">Изменить</button>
     </form>
 </div>
 </body>

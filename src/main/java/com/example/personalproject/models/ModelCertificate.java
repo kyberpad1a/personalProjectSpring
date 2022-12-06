@@ -3,6 +3,7 @@ package com.example.personalproject.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -14,10 +15,11 @@ public class ModelCertificate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID_Certificate;
     @NotBlank(message = "Поле не может быть пустым")
+    @Size(max = 50, message = "Длина поля не может превышать 50 символов")
     private String certificateName;
     @NotNull(message = "Дата не может быть пустой")
     private Date expirationDate;
-    @OneToMany(mappedBy = "certificate", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "certificate")
     private Collection<ModelGood> modelGood;
 
 

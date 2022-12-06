@@ -8,23 +8,42 @@
 <body class="body">
 <div th:insert="blocks/header"></div>
 <form method="post" th:object="${maintenance}" >
-    <input type="date" th:field="*{maintenanceDate}" name="maintenanceDate" placeholder="Введите дату">
-    <div style="color: red" th:if="${#fields.hasErrors('maintenanceDate')}" th:errors="*{maintenanceDate}"></div>
-    <input type="text" th:field="*{maintenanceText}" name="maintenanceText" placeholder="Введите Текст">
-    <div style="color: red" th:if="${#fields.hasErrors('maintenanceText')}" th:errors="*{maintenanceText}"></div>
-    <a>Статус: </a> <a> <input type="checkbox" th:field="*{maintenanceStatus}" name="maintenanceStatus" placeholder="Введите Текст"></a>
-    <select name="username">
-        <div th:each="element : ${users}">
-            <option th:text="${element.getUsername()}"></option>
-        </div>
-    </select>
-    <select name="warehouseAddress">
-        <div th:each="element : ${warehouse}">
-            <option th:text="${element.getWarehouseAddress()}"></option>
-        </div>
-    </select>
-    <br>
-    <button type="submit">Изменить</button>
+    <table>
+        <tr>
+            <td><a>Дата обслуживания: </a>
+                <input type="date" th:field="*{maintenanceDate}" name="maintenanceDate" placeholder="Введите дату">
+                <div style="color: red" th:if="${#fields.hasErrors('maintenanceDate')}" th:errors="*{maintenanceDate}"></div>
+
+            </td>
+            <td><a>Текст заявки: </a>
+                <input type="text" th:field="*{maintenanceText}" name="maintenanceText" placeholder="Введите Текст">
+                <div style="color: red" th:if="${#fields.hasErrors('maintenanceText')}" th:errors="*{maintenanceText}"></div>
+            </td>
+            <td><a>Ответственный: </a>
+                <select name="username">
+                    <div th:each="element : ${users}">
+                        <option th:text="${element.getUsername()}"></option>
+                    </div>
+                </select>
+            </td>
+            <td> <a>Склад: </a>>
+            <select name="warehouseAddress">
+                <div th:each="element : ${warehouse}">
+                    <option th:text="${element.getWarehouseAddress()}"></option>
+                </div>
+            </select>
+            </td>
+            <td>
+                  <a>Статус: </a> <a> <input type="checkbox" th:field="*{maintenanceStatus}" name="maintenanceStatus" placeholder="Введите Текст"></a>
+            </td>
+
+
+
+
+            <br>
+            <button type="submit">Изменить</button>
+        </tr>
+    </table>
 </form>
 </body>
 </html>
