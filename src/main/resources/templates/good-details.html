@@ -4,27 +4,103 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link th:href="@{/css/list.css}" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h3 {
+      color: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      max-width: 600px;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    td {
+      padding: 10px;
+      border: 1px solid #555;
+      background-color: #1e1e1e;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      background-color: #FF4D4D;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #CC0000;
+    }
+
+    .btn-del {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      td {
+        display: block;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body class="body">
 
-<div th:insert="blocks/header"></div>
 <div th:each="el : ${good}">
   <h3>Подробнее про товар: </h3> <h3 th:text="${el.goodName}"></h3>
   <table>
     <tr>
-      <td>><a>Название товара:</a>
+      <td><a>Название товара:</a>
         <a th:text="${el.goodName}"></a>
       </td>
     </tr>
     <tr>
-      <td>><a>Вес:</a>
+      <td><a>Вес:</a>
         <a th:text="${el.goodWeight}"></a>
       </td>
     </tr>
   </table>
-  <a th:href="'/good/' + ${el.ID_Good} + '/edit'">Редактировать</a>
+
   <form th:action="'/good/' + ${el.ID_Good} + '/remove'" method="post">
     <button type="submit" class="btn btn-del">Удалить</button>
   </form>
 </div>
 </body>
+</html>

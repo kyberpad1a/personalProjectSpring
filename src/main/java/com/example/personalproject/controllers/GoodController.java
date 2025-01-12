@@ -68,20 +68,6 @@ public class GoodController {
         return "redirect:/good";
     }
 
-    @GetMapping("/good/filter")
-    public String goodFilter(Model model)
-    {
-        return "good-filter";
-    }
-
-    @PostMapping("/good/filter/result")
-    public String goodResult(@RequestParam String goodName, Model model)
-    {
-        List<ModelGood> result = goodRepository.findByGoodNameContains(goodName);
-//        List<Post> result = postRepository.findLikeTitle(title);
-        model.addAttribute("result", result);
-        return "good-filter";
-    }
 
     @GetMapping("/good/{ID_Good}")
     public String goodDetails(@PathVariable(value = "ID_Good") long ID_Good, Model model)
@@ -97,45 +83,6 @@ public class GoodController {
         return "good-details";
     }
 
-    @GetMapping("/good/{ID_Good}/edit")
-    public String goodEdit(@PathVariable("ID_Good") long ID_Good, Model ModelGood, @ModelAttribute("good") ModelGood modelGood, Model ModelGoodType, Model ModelMaterial, Model ModelCertificate)
-    {
-        /*if(!goodRepository.existsById(ID_Good)){
-            return "redirect:/good";
-        }
-        Optional<modelGood> good = goodRepository.findById(ID_Good);
-        ArrayList<modelGood> res = new ArrayList<>();
-        good.ifPresent(res::add);*/
-        Iterable<com.example.personalproject.models.ModelCertificate> certificates = CertificateRepository.findAll();
-        ModelCertificate.addAttribute("certificate", certificates);
-        Iterable<com.example.personalproject.models.ModelGoodType> goodTypes = GoodTypeRepository.findAll();
-        ModelGoodType.addAttribute("goodType", goodTypes);
-        Iterable<com.example.personalproject.models.ModelMaterial> materials = MaterialRepository.findAll();
-        ModelMaterial.addAttribute("material", materials);
-        ModelGood res = goodRepository.findById(ID_Good).orElseThrow();
-        ModelGood.addAttribute("modelGood",res);
-        return "good-edit";
-    }
-
-    @PostMapping("/good/{ID_Good}/edit")
-    public String goodUpdate(@PathVariable("ID_Good") long ID_Good,
-                             @ModelAttribute("good") @Valid ModelGood modelGood, BindingResult bindingResult, @RequestParam String certificateName, Model ModelCertificate, @RequestParam String goodTypeName, Model ModelGoodType, @RequestParam String materialName, Model ModelMaterial )
-    {
-        if (bindingResult.hasErrors()) {
-            Iterable<ModelCertificate> certificates = CertificateRepository.findAll();
-            ModelCertificate.addAttribute("certificate", certificates);
-            Iterable<com.example.personalproject.models.ModelGoodType> goodTypes = GoodTypeRepository.findAll();
-            ModelGoodType.addAttribute("goodType", goodTypes);
-            Iterable<com.example.personalproject.models.ModelMaterial> materials = MaterialRepository.findAll();
-            ModelMaterial.addAttribute("material", materials);
-            return "good-edit";
-        }
-        modelGood.setCertificate(CertificateRepository.findByCertificateName(certificateName));
-        modelGood.setGoodType(GoodTypeRepository.findByGoodTypeName(goodTypeName));
-        modelGood.setMaterial(MaterialRepository.findByMaterialName(materialName));
-        goodRepository.save(modelGood);
-        return "good-main";
-    }
 
     @PostMapping("good/{ID_Good}/remove")
     public String goodDelete(@PathVariable("ID_Good") long ID_Good, Model model){
