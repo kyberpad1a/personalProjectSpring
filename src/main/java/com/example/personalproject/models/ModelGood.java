@@ -27,21 +27,13 @@ public class ModelGood {
     private ModelGoodType goodType;
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     private ModelMaterial material;
-    @OneToMany(mappedBy = "good", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private Collection<ModelShipment> modelShipmentCollection;
-    @OneToMany(mappedBy = "good", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private Collection<ModelQuality> modelQualityCollection;
 
-    public ModelGood(String goodName, double goodWeight, ModelCertificate certificate, ModelGoodType goodType, ModelMaterial material, Collection<ModelShipment> modelShipmentCollection, Collection<ModelQuality> modelQualityCollection) {
+    public ModelGood(String goodName, double goodWeight, ModelCertificate certificate, ModelGoodType goodType, ModelMaterial material) {
         this.goodName = goodName;
         this.goodWeight = goodWeight;
         this.certificate = certificate;
         this.goodType = goodType;
         this.material = material;
-        this.modelShipmentCollection = modelShipmentCollection;
-        this.modelQualityCollection = modelQualityCollection;
     }
 
     public Long getID_Good() {
@@ -92,19 +84,5 @@ public class ModelGood {
         this.material = material;
     }
 
-    public Collection<ModelShipment> getModelShipmentCollection() {
-        return modelShipmentCollection;
-    }
 
-    public void setModelShipmentCollection(Collection<ModelShipment> modelShipmentCollection) {
-        this.modelShipmentCollection = modelShipmentCollection;
-    }
-
-    public Collection<ModelQuality> getModelQualityCollection() {
-        return modelQualityCollection;
-    }
-
-    public void setModelQualityCollection(Collection<ModelQuality> modelQualityCollection) {
-        this.modelQualityCollection = modelQualityCollection;
-    }
 }
